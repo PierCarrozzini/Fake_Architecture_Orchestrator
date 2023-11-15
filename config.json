@@ -1,0 +1,13 @@
+{
+  "components": {
+    "web_server": {
+      "docker_image": "fake_web_server_image"
+    },
+    "database": {
+      "docker_image": "fake_database_image"
+    },
+    "firewall": {
+      "docker_image": "fake_firewall_image"
+    }
+  }
+}

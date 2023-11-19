@@ -1,0 +1,12 @@
+{
+  "web_server": {
+    "image": "nginx:latest",
+    "volume": "./my_web_page"
+  },
+  "database": {
+    "image": "postgres:latest",
+    "environment": {
+      "POSTGRES_PASSWORD": "your_password"
+    }
+  }
+}

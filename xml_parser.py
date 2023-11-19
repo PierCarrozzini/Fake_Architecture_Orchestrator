@@ -1,7 +1,5 @@
 import xml.etree.ElementTree as ET
 import json
-import docker
-import terraform
 
 
 # 3

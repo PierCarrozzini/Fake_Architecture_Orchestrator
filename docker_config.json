@@ -1,12 +1,60 @@
 {
   "web_server": {
     "image": "nginx:latest",
-    "volume": "./my_web_page"
+    "volume": "C://Users//pierc//PycharmProjects//FakeArchitectureOrchestrator//my_web_page"
   },
   "database": {
-    "image": "postgres:latest",
-    "environment": {
-      "POSTGRES_PASSWORD": "your_password"
-    }
+    "image": "mysql:latest",
+    "name": "my_database",
+    "user": "root",
+    "password": "password123",
+    "MYSQL_ROOT_PASSWORD": "example",
+    "MYSQL_USER": "pier"
+  },
+  "firewall": {
+    "image": "your_firewall_image:latest",
+    "port": 80,
+    "iptables_rules": [
+      "-A INPUT -p tcp --dport 22 -j ACCEPT",
+      "-A INPUT -p tcp --dport 80 -j ACCEPT",
+      "-A INPUT -j DROP"
+
+    ]
+  },
+  "cache": {
+    "image": "redis:latest",
+    "port": 6379
+  },
+  "message_queue": {
+    "image": "rabbitmq:latest",
+    "port": 5672
+  },
+  "cms": {
+    "image": "wordpress:latest",
+    "port": 8080
+  },
+  "proxy": {
+    "image": "haproxy:latest",
+    "port": 8080
+  },
+  "monitoring": {
+    "prometheus_port": 9090,
+    "grafana_port": 3000
+  },
+  "ci_cd": {
+    "image": "jenkins:latest",
+    "port": 8080
+  },
+  "e_commerce": {
+    "image": "magento:latest",
+    "port": 8080
+  },
+  "machine_learning": {
+    "image": "jupyter:latest",
+    "port": 8888
+  },
+  "version_control": {
+    "image": "gitlab/gitlab-ce:latest",
+    "port": 80
   }
 }

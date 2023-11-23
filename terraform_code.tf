@@ -1,21 +1,20 @@
 
-resource "docker_container" "bVUwOe1Q3J5sBHsqbzTg-1_container" {
-  image = "nginx:latest"
-  name  = "bVUwOe1Q3J5sBHsqbzTg-1_container"
-  volumes = ["./my_web_page:/usr/share/nginx/html"]
+resource "docker_container" "message_queue_4_container" {
+  image = "rabbitmq:latest"
+  name  = "message_queue_4_container"
+  ports {
+    internal = 5672
+    external =  5672
+  }
 }
 
 
-resource "docker_container" "bVUwOe1Q3J5sBHsqbzTg-2_container" {
-  image = "nginx:latest"
-  name  = "bVUwOe1Q3J5sBHsqbzTg-2_container"
-  volumes = ["./my_web_page:/usr/share/nginx/html"]
-}
-
-
-resource "docker_container" "pdmmIQ8_Or4k_K_Mo9M1-2_container" {
-  image = "postgres:latest"
-  name  = "pdmmIQ8_Or4k_K_Mo9M1-2_container"
-  environment = { "POSTGRES_PASSWORD" = "your_password" }
+resource "docker_container" "cms_5_container" {
+  image = "wordpress:latest"
+  name  = "cms_5_container"
+  ports {
+    internal = 8080
+    external =  8080
+  }
 }
 

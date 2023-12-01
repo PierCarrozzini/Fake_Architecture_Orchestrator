@@ -6,7 +6,7 @@
   "database": {
     "image": "mysql:latest",
     "name": "my_database",
-    "user": "root",
+    "user": "my_user",
     "password": "password123",
     "MYSQL_ROOT_PASSWORD": "example",
     "MYSQL_USER": "pier"
@@ -30,7 +30,7 @@
     "port": 5672
   },
   "cms": {
-    "image": "wordpress:latest",
+    "image": "WordPress:latest",
     "port": 8080
   },
   "proxy": {

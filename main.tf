@@ -1,4 +1,3 @@
-#https://www.cyberithub.com/step-by-step-guide-to-setup-terraform-in-pycharm-on-windows-10/
 terraform {
   required_providers {
     docker = {

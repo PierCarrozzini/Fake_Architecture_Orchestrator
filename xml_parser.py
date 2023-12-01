@@ -7,23 +7,29 @@ def detect_components(root, config):
     components = {}
 
     for element in root.iter():
-        # Add logic to identify components based on XML structure
-        if element.get(key='value') == "database":
-            component_type = "database"
-        elif element.get(key='value') == "web_server":
-            component_type = "web_server"
-        elif element.get(key='label') == "firewall":
-            component_type = "firewall"
-            # Add more conditions for other component types
+        if element.tag == 'object':
+            component_type = element.get('label')
+            component_id = element.get('id')
 
-            # Access Docker image for the detected component type
-            docker_image = config['components'][component_type]['docker_image']
+            if component_type in config['components']:
+                docker_image = config['components'][component_type]['docker_image']
 
-            # Store information about the detected component
-            components[element.attrib['id']] = {
-                'type': component_type,
-                'docker_image': docker_image
-            }
+                components[component_id] = {
+                    'type': component_type,
+                    'docker_image': docker_image
+                }
+
+        elif element.tag == 'mxCell':
+            component_type = element.get('value')
+            component_id = element.get('id')
+
+            if component_type in config['components']:
+                docker_image = config['components'][component_type]['docker_image']
+
+                components[component_id] = {
+                    'type': component_type,
+                    'docker_image': docker_image
+                }
 
     return components
 
@@ -45,6 +51,7 @@ resource "docker_container" "{details['type']}_{component_id}" {{
         """
 
     return terraform_plan
+
 
 # #4
 
@@ -78,6 +85,7 @@ def parse_xml(xml_file):
     print("\nTerraform Plan:")
     print(terraform_plan)
 
+
 if __name__ == "__main__":
-    xml_file_path = "C:/Users\pierc\Desktop\Diagram.drawio.xml"
+    xml_file_path = "drawio_Diagrams/ProvaProprieta.drawio.xml"
     parse_xml(xml_file_path)

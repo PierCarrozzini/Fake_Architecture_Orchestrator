@@ -112,7 +112,7 @@ resource "docker_container" "{container_name}" {{
 
                 db_name = docker_config[component_type].get('name', 'my_database')
 
-                db_user = docker_config[component_type].get('user', 'root')
+                db_user = docker_config[component_type].get('user', 'myuser')
 
                 db_password = docker_config[component_type].get('password', 'password123')
 
@@ -211,7 +211,7 @@ def run_terraform_apply(path):
 
 
 if __name__ == "__main__":
-    diagram_xml = "drawio_Diagrams/TestProva.drawio.xml"
+    diagram_xml = "drawio_Diagrams/ProvaProprieta.drawio.xml"
     docker_config_file = "docker_config.json"
     terraform_path = ("C://Users//pierc//Documents//Magistrale//2 Anno//1° "
                       "Semestre//CyberSecurity//Progetto//terraform.exe")
@@ -225,9 +225,9 @@ if __name__ == "__main__":
     write_terraform_code_to_file(terraform_code)
 
     # Step 1: Initialize Terraform
-    run_terraform_init(terraform_path)
+    #run_terraform_init(terraform_path)
 
     # Step 2: Apply Terraform Plan
-    run_terraform_apply(terraform_path)
+    #run_terraform_apply(terraform_path)
 
     print("=== Infrastructure Generation Complete ===")

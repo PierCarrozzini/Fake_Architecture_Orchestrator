@@ -8,6 +8,7 @@ def load_docker_config(config_file):
     print("Loading Docker configuration...")
     with open(config_file, 'r') as f:
         docker_configuration = json.load(f)
+    print("...Docker configuration loaded successfully")
     return docker_configuration
 
 
@@ -38,7 +39,7 @@ if __name__ == "__main__":
     terraform_path = ("C://Users//pierc//Documents//Magistrale//2 Anno//1° "
                       "Semestre//CyberSecurity//Progetto//terraform.exe")
 
-    print("=== Starting Infrastructure Generation ===")
+    print("=== Starting Detection ===")
 
     # Reading the diagram components from the xml file
     components = xml_Parser.parse_drawio_xml(diagram_xml)
@@ -46,6 +47,7 @@ if __name__ == "__main__":
     # Get the configuration file for docker
     docker_config = load_docker_config(docker_config_file)
 
+    print("\n=== Starting Infrastructure Generation ===\n")
     # Generate the terraform plan using detected components and current docker configuration
     terraform_code = terraform_plan_generator.generate_terraform_plan(components, docker_config)
 
@@ -53,9 +55,9 @@ if __name__ == "__main__":
     write_terraform_code_to_file(terraform_code)
 
     # Next step: Initialize Terraform
-    run_terraform_init(terraform_path)
+    #run_terraform_init(terraform_path)
 
     # Next step: Apply Terraform Plan
-    run_terraform_apply(terraform_path)
+    #run_terraform_apply(terraform_path)
 
-    print("=== Infrastructure Generation Complete ===")
+    print("\n=== Infrastructure Generation Complete ===")

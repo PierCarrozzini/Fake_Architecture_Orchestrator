@@ -1,4 +1,6 @@
 import xml.etree.ElementTree as ET
+from tabulate import tabulate
+
 
 def parse_drawio_xml(xml_file):
     tree = ET.parse(xml_file)
@@ -43,6 +45,10 @@ def parse_drawio_xml(xml_file):
                     component_info['height'] = geometry_elem.get('height')
 
             components.append(component_info)
+
+            data_string = component_info
+            key_value_table = [(key, str(value)) for key, value in data_string.items()]
+            print(tabulate(key_value_table, headers=["Chiave", "Valore"], tablefmt="orgtbl"))
 
             print(f"Component :")
             print(f"Number: {component_info['number']}")
@@ -97,6 +103,11 @@ def parse_drawio_xml(xml_file):
                 component_info['height'] = geometry_elem.get('height')
             if component_info['style'] is not None:
                 components.append(component_info)
+
+                data_string = component_info
+                key_value_table = [(key, str(value)) for key, value in data_string.items()]
+                print(tabulate(key_value_table, headers=["Chiave", "Valore"], tablefmt="orgtbl"))
+
                 print(f"Component :")
                 print(f"Number: {component_info['number']}")
                 print(f"ID: {component_info['id']}")
@@ -133,4 +144,15 @@ def parse_drawio_xml(xml_file):
             print(f"Number of '{value}' components: {count}")
     print(f"Number of not recognized components: {other_value_count}")
     print(components)
+    # Tabella
+    data = components
+
+    # Ottiengo le chiavi del dizionario come header (per tabella è così)
+    header = data[0].keys()
+
+    # Conversione dei dizionari in liste per ogni riga
+    table_data = [list(row.values()) for row in data]
+
+    # Stampo i dati sotto forma di tabella (package tabulate)
+    print(tabulate(table_data, headers=header, tablefmt="fancy_grid"))
     return components

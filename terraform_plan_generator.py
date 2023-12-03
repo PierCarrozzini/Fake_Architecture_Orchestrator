@@ -60,7 +60,7 @@ resource "docker_container" "{container_name}" {{
 
                                    f' {cache_port}\n  }}\n')
 
-            elif component_type == 'message_queue':
+            elif component_type == 'message_queque':
                 # RabbitMQ message queue use case
                 mq_port = docker_config[component_type].get('port', '5672')
                 terraform_code += (f'  ports {{\n    internal = {mq_port}\n    external = '

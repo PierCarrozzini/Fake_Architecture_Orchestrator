@@ -27,7 +27,7 @@
     "image": "redis:latest",
     "port": 6379
   },
-  "message_queue": {
+  "message_queque": {
     "image": "rabbitmq:latest",
     "port": 5672
   },

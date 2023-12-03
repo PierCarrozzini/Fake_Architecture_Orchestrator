@@ -154,7 +154,7 @@ def generate_terraform_plan(components, docker_config):
     print("Generating Terraform plan...")
 
     terraform_code = ""
-    external_port = 8079
+    external_port_web_server = 8079
 
     for component in components:
         component_type = component['type']
@@ -169,16 +169,20 @@ resource "docker_container" "{container_name}" {{
   name  = "{container_name}"
 '''
 
-            # Additional configurations based on component type
+            # Particular configurations based on component type
             if component_type == 'web_server':
-                external_port += 1
+                external_port_web_server += 1
                 volume_path = docker_config[component_type].get('volume', '')
                 terraform_code += (f'  volumes {{\n    host_path      = "{volume_path}"\n    container_path = '
                                    f'"/usr/share/nginx/html"\n  }}\n')
-                terraform_code += (f'  ports {{\n    internal = {internal_port}\n    external = '
-                                   f'{external_port}\n  }}\n')
+                terraform_code += (f'  ports {{\n    internal = 80\n    external = '
+                                   f'{external_port_web_server}\n  }}\n')
+                # terraform_code += '}\n\n'
 
             elif component_type == 'database':
+
+                # MySQL database use case
+
                 db_name = docker_config[component_type].get('name', 'my_database')
 
                 db_user = docker_config[component_type].get('user', 'myuser')
@@ -191,6 +195,67 @@ resource "docker_container" "{container_name}" {{
                                    f'"MYSQL_USER= {db_user}","MYSQL_PASSWORD= {db_password}"]\n')
                 terraform_code += (f'  ports {{\n    internal = {database_port}\n    external = '
                                    f' {database_port}\n  }}\n')
+
+            elif component_type == 'cache':
+
+                # Redis cache use case
+
+                cache_port = docker_config[component_type].get('port', '6379')
+
+                terraform_code += (f'  ports {{\n    internal = {cache_port}\n    external = '
+
+                                   f' {cache_port}\n  }}\n')
+
+            elif component_type == 'message_queue':
+                # RabbitMQ message queue use case
+                mq_port = docker_config[component_type].get('port', '5672')
+                terraform_code += (f'  ports {{\n    internal = {mq_port}\n    external = '
+                                   f' {mq_port}\n  }}\n')
+
+            elif component_type == 'cms':
+                # WordPress use case CMS (Content Management System)
+                wp_port = docker_config[component_type].get('port', '8080')
+                terraform_code += (f'  ports {{\n    internal = {wp_port}\n    external = '
+                                   f' {wp_port}\n  }}\n')
+# ################## DA QUI IN POI TUTTO DA TESTARE ######################################
+            elif component_type == 'proxy':
+                # HAProxy use case
+                proxy_port = docker_config[component_type].get('port', '8080')
+                terraform_code += (f'  ports {{\n    internal = {proxy_port}\n    external = '
+                                   f' {proxy_port}\n  }}\n')
+
+            elif component_type == 'monitoring':
+                # Prometheus & Grafana (Monitoraggio e Registrazione)
+                prometheus_port = docker_config[component_type].get('prometheus_port', '9090')
+                grafana_port = docker_config[component_type].get('grafana_port', '3000')
+                terraform_code += (f'  ports {{\n    internal = {prometheus_port}\n    external = '
+                                   f' {prometheus_port}\n  }}\n')
+                terraform_code += (f'  ports {{\n    internal = {grafana_port}\n    external = '
+                                   f' {grafana_port}\n  }}\n')
+
+            elif component_type == 'ci_cd':
+                # Jenkins use case (Continuous Integration / Continuous Deployment)
+                jenkins_port = docker_config[component_type].get('port', '8080')
+                terraform_code += (f'  ports {{\n    internal = {jenkins_port}\n    external = '
+                                   f' {jenkins_port}\n  }}\n')
+
+            elif component_type == 'e_commerce':
+                # Magento use case
+                magento_port = docker_config[component_type].get('port', '8080')
+                terraform_code += (f'  ports {{\n    internal = {magento_port}\n    external = '
+                                   f' {magento_port}\n  }}\n')
+
+            elif component_type == 'machine_learning':
+                # Jupyter Notebook use case
+                jupyter_port = docker_config[component_type].get('port', '8888')
+                terraform_code += (f'  ports {{\n    internal = {jupyter_port}\n    external = '
+                                   f' {jupyter_port}\n  }}\n')
+
+            elif component_type == 'version_control':
+                # GitLab use case
+                gitlab_port = docker_config[component_type].get('port', '80')
+                terraform_code += (f'  ports {{\n    internal = {gitlab_port}\n    external = '
+                                   f' {gitlab_port}\n  }}\n')
 
             terraform_code += '}\n\n'
 
@@ -233,9 +298,9 @@ if __name__ == "__main__":
     write_terraform_code_to_file(terraform_code)
 
     # Step 1: Initialize Terraform
-    run_terraform_init(terraform_path)
+    #run_terraform_init(terraform_path)
 
     # Step 2: Apply Terraform Plan
-    run_terraform_apply(terraform_path)
+    #run_terraform_apply(terraform_path)
 
     print("=== Infrastructure Generation Complete ===")

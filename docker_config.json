@@ -9,7 +9,9 @@
     "user": "my_user",
     "password": "password123",
     "MYSQL_ROOT_PASSWORD": "example",
-    "MYSQL_USER": "pier"
+    "MYSQL_USER": "pier",
+    "db_data": "/var/lib/mysql",
+    "restart": "always"
   },
   "firewall": {
     "image": "your_firewall_image:latest",
@@ -30,8 +32,14 @@
     "port": 5672
   },
   "cms": {
-    "image": "WordPress:latest",
-    "port": 8080
+    "image": "wordpress:latest",
+    "port": "8080",
+    "wp_data": "/var/www/html",
+    "restart": "always",
+    "WORDPRESS_DB_USER": "wordpress",
+    "WORDPRESS_DB_PASSWORD": "wordpress",
+    "WORDPRESS_DB_NAME": "wordpress",
+    "WORDPRESS_DB_HOST": "db"
   },
   "proxy": {
     "image": "haproxy:latest",

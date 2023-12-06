@@ -13,3 +13,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 10);
     });
 });
+
+// Questo codice aggiunge un effetto di animazione alla barra di navigazione
+
+window.addEventListener("scroll", function() {
+  if (window.scrollY > 0) {
+    document.querySelector("nav").style.backgroundColor = "#000";
+  } else {
+    document.querySelector("nav").style.backgroundColor = "transparent";
+  }
+});
+
+document.querySelector("a").addEventListener("click", function() {
+  window.open("https://github.com/PierCarrozzini/Fake_Architecture_Orchestrator");
+});

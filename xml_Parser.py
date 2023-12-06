@@ -8,12 +8,13 @@ def parse_drawio_xml(xml_file):
 
     default_value1 = 80
     default_value2 = 8080
-    default_value3 = 'MIAOO'
+    default_value3 = ''
     default_value4 = 'OK'
 
     components = []
     component_counter = 1
-    recognized_values = ['web_server', 'database', 'firewall', 'cms']
+    recognized_values = ['web_server', 'database', 'firewall', 'cms', 'cache', 'message_queque', 'proxy',
+                         'monitoring', 'ci_cd', 'e_commerce', 'machine_learning', 'version_control']
     value_counts = {}
     other_value_count = 0
 
@@ -65,7 +66,7 @@ def parse_drawio_xml(xml_file):
 
             # Aggiunta della logica di conteggio
             value = component_info['value']
-            if value in recognized_values:
+            if value in recognized_values or recognized_values:
                 if value in value_counts:
                     value_counts[value] += 1
                     print(f"Found {value} component in the diagram, number = {value_counts[value]}.")
@@ -75,6 +76,7 @@ def parse_drawio_xml(xml_file):
             else:
                 other_value_count += 1
                 print(f"Found a not recognized component in the diagram, number = {other_value_count}.")
+                print(f"The unrecognized component is named '{value}'.")
 
         elif cell_elem.tag == 'mxCell' and cell_elem.get('value') is not None:
 
@@ -88,11 +90,11 @@ def parse_drawio_xml(xml_file):
             component_info['name'] = cell_elem.get('id')
             component_info['value'] = cell_elem.get('value')
             component_info['type'] = cell_elem.get('value')
-            component_info['style'] = cell_elem.get('style')
             component_info['Internal_port'] = cell_elem.attrib.get('Internal_port') if cell_elem.attrib.get(
-                'Internal_port') is not None else default_value1
+                'Internal_port') is not None else default_value3
             component_info['External_port'] = cell_elem.attrib.get('External_port') if cell_elem.attrib.get(
-                'External_port') is not None else default_value2
+                'External_port') is not None else default_value3
+            component_info['style'] = cell_elem.get('style')
 
             # Extract geometry information
             geometry_elem = cell_elem.find('mxGeometry')
@@ -117,6 +119,8 @@ def parse_drawio_xml(xml_file):
                 print(f"Style: {component_info['style']}")
                 print(f"Position: ({component_info['x']}, {component_info['y']})")
                 print(f"Size: {component_info['width']} x {component_info['height']}")
+                print(f"Internal_Port: {component_info['Internal_port']}")
+                print(f"External_Port: {component_info['External_port']}")
                 # mancano i print di int/ext port perché è tardi
                 print()
 
@@ -132,6 +136,7 @@ def parse_drawio_xml(xml_file):
                 else:
                     other_value_count += 1
                     print(f"Found a not recognized component in the diagram, number = {other_value_count}.")
+                    print(f"The unrecognized component is named '{value}'.")
 
         print('---------------------------------------------')
 
@@ -148,7 +153,7 @@ def parse_drawio_xml(xml_file):
     data = components
 
     # Ottiengo le chiavi del dizionario come header (per tabella è così)
-    header = data[0].keys()
+    header = list(data[0].keys())
 
     # Conversione dei dizionari in liste per ogni riga
     table_data = [list(row.values()) for row in data]

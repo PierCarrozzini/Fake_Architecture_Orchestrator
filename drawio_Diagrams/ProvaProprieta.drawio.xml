@@ -8,7 +8,7 @@
         <mxCell id="bVUwOe1Q3J5sBHsqbzTg-1" value="web_server" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/web_server.svg;" parent="1" vertex="1">
           <mxGeometry x="380" y="230" width="40" height="50" as="geometry" />
         </mxCell>
-        <object id="AV9z1z4Qi24HSHp0C6oS-1" label="web_server" Internal_port="80" External_port="8080">
+        <object id="AV9z1z4Qi24HSHp0C6oS-1" label="web_server00" Internal_port="80" External_port="8080">
           <mxCell style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
             <mxGeometry x="260" y="120" width="80" height="80" as="geometry" />
           </mxCell>
@@ -19,16 +19,16 @@
             <mxPoint x="440" y="270" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="AV9z1z4Qi24HSHp0C6oS-3" value="database" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/database.svg;" parent="1" vertex="1">
+        <mxCell id="AV9z1z4Qi24HSHp0C6oS-3" value="database00" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/database.svg;" parent="1" vertex="1">
           <mxGeometry x="540" y="210" width="50" height="37" as="geometry" />
         </mxCell>
-        <mxCell id="AV9z1z4Qi24HSHp0C6oS-4" value="message_queque" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+        <mxCell id="AV9z1z4Qi24HSHp0C6oS-4" value="message_queque00" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="470" y="380" width="80" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="AV9z1z4Qi24HSHp0C6oS-5" value="cache" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+        <mxCell id="AV9z1z4Qi24HSHp0C6oS-5" value="cache00" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="230" y="330" width="80" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="AV9z1z4Qi24HSHp0C6oS-6" value="cms" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/firewall.svg;" parent="1" vertex="1">
+        <mxCell id="AV9z1z4Qi24HSHp0C6oS-6" value="firewall00" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/firewall.svg;" parent="1" vertex="1">
           <mxGeometry x="180" y="230" width="30.5" height="50" as="geometry" />
         </mxCell>
       </root>

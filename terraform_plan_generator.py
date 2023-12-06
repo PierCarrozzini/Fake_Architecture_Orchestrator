@@ -50,6 +50,39 @@ resource "docker_container" "{container_name}" {{
                 terraform_code += (f'  ports {{\n    internal = {database_port}\n    external = '
                                    f' {database_port}\n  }}\n')
 
+            elif component_type == 'firewall':
+
+                # API-Firewall use case
+
+                firewall_port = docker_config[component_type].get('port', '8088')
+                restart = docker_config[component_type].get('restart', '')
+                HOST_PATH_TO_SPEC = docker_config[component_type].get('HOST_PATH_TO_SPEC', 'LOG_ONLY')
+                CONTAINER_PATH_TO_SPEC = docker_config[component_type].get('CONTAINER_PATH_TO_SPEC', 'LOG_ONLY')
+                APIFW_REQUEST_VALIDATION = docker_config[component_type].get('APIFW_REQUEST_VALIDATION', 'LOG_ONLY')
+                APIFW_RESPONSE_VALIDATION = docker_config[component_type].get('APIFW_RESPONSE_VALIDATION', 'LOG_ONLY')
+                APIFW_API_SPECS = docker_config[component_type].get('APIFW_API_SPECS', '')
+                APIFW_URL = docker_config[component_type].get('APIFW_URL', '')
+                APIFW_SERVER_URL = docker_config[component_type].get('APIFW_SERVER_URL', '')
+
+                #terraform_code += f'  volumes {{\n   <{HOST_PATH_TO_SPEC}> = "<{CONTAINER_PATH_TO_SPEC}>"\n}}\n'
+                terraform_code += (f'  ports {{\n    internal = {firewall_port}\n    external = '
+                                   f' {firewall_port}\n  }}\n')
+                terraform_code += f'  restart = "{restart}"\n'
+                terraform_code += (f'  env = [ "APIFW_REQUEST_VALIDATION= {APIFW_REQUEST_VALIDATION}", '
+                                   f'"APIFW_RESPONSE_VALIDATION= {APIFW_RESPONSE_VALIDATION}", "APIFW_API_SPECS= '
+                                   f'{APIFW_API_SPECS}"]\n')
+# "APIFW_URL= {APIFW_URL}", "APIFW_SERVER_URL= {APIFW_SERVER_URL}"
+
+            elif component_type == 'firewall-alpine':
+
+                # Alpine-Firewall use case
+
+                command = docker_config[component_type].get('command', '')
+                restart = docker_config[component_type].get('restart', '')
+
+                terraform_code += f'  restart = "{restart}"\n'
+                terraform_code += (f' command = ["ash", "-c", "apk update && apk add iptables && iptables -A INPUT -p tcp --dport 80 -j ACCEPT && iptables -A INPUT -p udp --dport 53 -j DROP && exec tail -f /dev/null"]\n')
+
             elif component_type == 'cache':
 
                 # Redis cache use case

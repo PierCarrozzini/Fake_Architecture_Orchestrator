@@ -13,9 +13,23 @@
     "db_data": "/var/lib/mysql",
     "restart": "always"
   },
+  "firewall-alpine": {
+    "image": "alpine:latest",
+    "command": ["bash", "-c", "apt-get update && apt-get install -y iptables && iptables -A INPUT -p tcp --dport 80 -j ACCEPT && iptables -A INPUT -p udp --dport 53 -j DROP && exec tail -f /dev/null"],
+    "restart": "always"
+},
   "firewall": {
-    "image": "your_firewall_image:latest",
-    "port": 80,
+    "image": "wallarm/api-firewall:latest",
+    "port": 8088,
+    "restart": "on-failure",
+    "stop_grace_period": "1s",
+    "HOST_PATH_TO_SPEC": "/usr/share/nginx/html",
+    "CONTAINER_PATH_TO_SPEC": "/api-firewall/resources/swagger.json",
+    "APIFW_API_SPECS": "/api-firewall/resources/swagger.json",
+    "APIFW_URL": "https://localhost:8080/",
+    "APIFW_SERVER_URL": "https://localhost:8080/",
+    "APIFW_REQUEST_VALIDATION": "LOG_ONLY",
+    "APIFW_RESPONSE_VALIDATION": "LOG_ONLY",
     "iptables_rules": [
       "-A INPUT -p tcp --dport 22 -j ACCEPT",
       "-A INPUT -p tcp --dport 80 -j ACCEPT",
@@ -43,7 +57,14 @@
   },
   "proxy": {
     "image": "haproxy:latest",
-    "port": 8080
+    "port": 8080,
+    "forward": "web_server:80",
+    "ssl_certificate": "/path/to/certificate.pem",
+    "ssl_key": "/path/to/private_key.pem",
+    "custom_config": {
+      "option1": "value1",
+      "option2": "value2"
+    }
   },
   "monitoring": {
     "prometheus_port": 9090,

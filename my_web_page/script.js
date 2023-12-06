@@ -1,29 +1,71 @@
-// scripts.js
-function greetUser() {
-    alert('Hello! Welcome to our example website.');
+document.addEventListener('DOMContentLoaded', function () {
+    fadeInElement('introduction', 2000);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    fadeInElement('features', 3500);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    fadeInElement('contact', 5000);
+});
+
+function fadeInElement(elementId, duration) {
+    const element = document.getElementById(elementId);
+
+    if (element) {
+        let opacity = 0;
+        const start = performance.now();
+
+        function animate(currentTime) {
+            const elapsed = currentTime - start;
+            opacity = elapsed / duration;
+
+            if (opacity <= 1) {
+                element.style.opacity = opacity;
+                requestAnimationFrame(animate);
+            }
+        }
+
+        requestAnimationFrame(animate);
+    }
 }
 
-// Add a simple animation trigger
-document.addEventListener('DOMContentLoaded', function() {
-    const header = document.querySelector('header h1');
-    header.addEventListener('click', function() {
-        header.style.animation = 'none';
-        setTimeout(() => {
-            header.style.animation = '';
-        }, 10);
+// Smooth Scroll
+document.querySelectorAll('nav a').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
     });
 });
 
-// Questo codice aggiunge un effetto di animazione alla barra di navigazione
+// Parallax Effect
+window.addEventListener('scroll', function () {
+    let scrollPosition = window.scrollY;
 
-window.addEventListener("scroll", function() {
-  if (window.scrollY > 0) {
-    document.querySelector("nav").style.backgroundColor = "#000";
-  } else {
-    document.querySelector("nav").style.backgroundColor = "transparent";
-  }
+    // Parallax effect on header background
+    document.querySelector('header').style.backgroundPositionY = `${scrollPosition * 0.5}px`;
 });
 
-document.querySelector("a").addEventListener("click", function() {
-  window.open("https://github.com/PierCarrozzini/Fake_Architecture_Orchestrator");
+// Responsive Footer
+window.addEventListener('resize', function () {
+    if (window.innerWidth < 768) {
+        document.querySelector('footer p').innerHTML = '&copy; 2023 Cybersecurity Summit.';
+    } else {
+        document.querySelector('footer p').innerHTML = '&copy; 2023 Cybersecurity Summit. All rights reserved.';
+    }
+});
+
+// Basic Animation
+document.addEventListener('DOMContentLoaded', function () {
+    const title = document.querySelector('h1');
+    title.style.opacity = '0';
+
+    setTimeout(() => {
+        title.style.transition = 'opacity 1s ease-in-out';
+        title.style.opacity = '1';
+    }, 500);
 });

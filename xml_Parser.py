@@ -25,7 +25,7 @@ def parse_drawio_xml(xml_file):
             component_info['number'] = component_counter
             component_counter += 1
 
-            # Extract information about each vertex (component)
+            # Extract information about each component
             component_info['id'] = cell_elem.attrib.get('id')
             component_info['name'] = cell_elem.attrib.get('id')
             component_info['value'] = cell_elem.attrib.get('label')
@@ -64,7 +64,7 @@ def parse_drawio_xml(xml_file):
             print(f"Size: {component_info['width']} x {component_info['height']}")
             print()
 
-            # Aggiunta della logica di conteggio
+            # Count component logic
             value = component_info['value']
             if value in recognized_values or recognized_values:
                 if value in value_counts:
@@ -85,7 +85,7 @@ def parse_drawio_xml(xml_file):
             component_info['number'] = component_counter
             component_counter += 1
 
-            # Extract information about each vertex (component)
+            # Extract information about each component
             component_info['id'] = cell_elem.get('id')
             component_info['name'] = cell_elem.get('id')
             component_info['value'] = cell_elem.get('value')
@@ -121,10 +121,10 @@ def parse_drawio_xml(xml_file):
                 print(f"Size: {component_info['width']} x {component_info['height']}")
                 print(f"Internal_Port: {component_info['Internal_port']}")
                 print(f"External_Port: {component_info['External_port']}")
-                # mancano i print di int/ext port perché è tardi
+                # mancano i print di int/ext port perchè è tardi
                 print()
 
-                # Aggiunta della logica di conteggio
+                # Count component logic
                 value = component_info['value']
                 if value in recognized_values:
                     if value in value_counts:
@@ -145,11 +145,11 @@ def parse_drawio_xml(xml_file):
     # Creating individual variables for each unique value
     for value, count in value_counts.items():
         if value in recognized_values:
-            globals()[value] = count  # Avoid this if possible; use a dictionary instead
+            globals()[value] = count  # we could use a dictionary instead
             print(f"Number of '{value}' components: {count}")
     print(f"Number of not recognized components: {other_value_count}")
     print(components)
-    # Tabella
+    # Table
     data = components
 
     # Ottiengo le chiavi del dizionario come header (per tabella è così)

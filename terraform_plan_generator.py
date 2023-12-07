@@ -7,7 +7,7 @@ def generate_terraform_plan(components, docker_config):
     for component in components:
         component_type = component['type']
         container_name = f"{component['type']}_{component['number']}_container"
-        internal_port = component['Internal_port']
+        #internal_port = component['Internal_port']
 
         if component_type in docker_config:
             docker_image = docker_config[component_type].get('image', 'default_docker_image')

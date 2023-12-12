@@ -13,12 +13,12 @@
     "db_data": "/var/lib/mysql",
     "restart": "always"
   },
-  "firewall-alpine": {
+  "firewall": {
     "image": "alpine:latest",
     "command": ["bash", "-c", "apt-get update && apt-get install -y iptables && iptables -A INPUT -p tcp --dport 80 -j ACCEPT && iptables -A INPUT -p udp --dport 53 -j DROP && exec tail -f /dev/null"],
     "restart": "always"
 },
-  "firewall": {
+  "firewall-alpine": {
     "image": "wallarm/api-firewall:latest",
     "port": 8088,
     "restart": "on-failure",

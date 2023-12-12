@@ -39,6 +39,7 @@ resource "docker_container" "{container_name}" {{
                 db_password = docker_config[component_type].get('password', 'password123')
 
                 database_port = docker_config[component_type].get('port', 3306)  # Sostituire con porta effettiva del db
+                external_port_database += 1
 
                 volume_path = docker_config[component_type].get('db_data', '')
 
@@ -49,7 +50,7 @@ resource "docker_container" "{container_name}" {{
                 terraform_code += (f'  env = [ "MYSQL_DATABASE= {db_name}","MYSQL_ROOT_PASSWORD= {db_password}",'
                                    f'"MYSQL_USER= {db_user}","MYSQL_PASSWORD= {db_password}"]\n')
                 terraform_code += (f'  ports {{\n    internal = {database_port}\n    external = '
-                                   f' {database_port}\n  }}\n')
+                                   f' {external_port_database}\n  }}\n')
 
             elif component_type == 'firewall':
 

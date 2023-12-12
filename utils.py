@@ -13,7 +13,7 @@ docker_config_file = "/Users/orlando/Desktop/FakeArchitectureOrchestrator/projec
 #terraform_path = "C://Users//pierc//Documents//Magistrale//2 Anno//1° Semestre//CyberSecurity//Progetto//terraform.exe"
 terraform_path = "/Users/orlando/Desktop/FakeArchitectureOrchestrator/project_new/terraform"
 
-image_path = "Images/img2.jpg"
+image_path = "Images/test.jpg"
 result_img_path = "Images/prediction.jpg"
 img_resized_path = "Images/resized.jpg"
 

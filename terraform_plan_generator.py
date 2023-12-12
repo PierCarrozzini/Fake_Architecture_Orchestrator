@@ -52,7 +52,7 @@ resource "docker_container" "{container_name}" {{
                 terraform_code += (f'  ports {{\n    internal = {port_database}\n    external = '
                                    f' {port_database}\n  }}\n')
 
-            elif component_type == 'firewall':
+            elif component_type == 'firewall-alpine':
 
                 # API-Firewall use case
 
@@ -75,7 +75,7 @@ resource "docker_container" "{container_name}" {{
                                    f'{APIFW_API_SPECS}"]\n')
             # "APIFW_URL= {APIFW_URL}", "APIFW_SERVER_URL= {APIFW_SERVER_URL}"
 
-            elif component_type == 'firewall-alpine':
+            elif component_type == 'firewall':
 
                 # Alpine-Firewall use case
 

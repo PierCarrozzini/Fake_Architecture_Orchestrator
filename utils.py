@@ -3,6 +3,30 @@
 import subprocess
 import json
 
+# PATH DEFINITION
+
+diagram_xml = "drawio_Diagrams/ProvaProprieta.drawio.xml"
+
+docker_config_file = "/Users/orlando/Desktop/FakeArchitectureOrchestrator/project_new/docker_config.json"
+
+#terraform_path = "C://Users//pierc//Documents//Magistrale//2 Anno//1° Semestre//CyberSecurity//Progetto//terraform.exe"
+terraform_path = "/Users/orlando/Desktop/FakeArchitectureOrchestrator/project_new/terraform"
+
+image_path = "Images/img2.jpg"
+result_img_path = "Images/prediction.jpg"
+img_resized_path = "Images/resized.jpg"
+
+# FUNCTION DEFINITION
+
+def chiedi_img():
+    while True:
+        scelt = input(" \n Fornire il path dell'immagine da analizzare o default per l'immagine predefinita: ").lower()
+        if scelt in ['Default', 'default']:
+            return image_path
+        else:
+            print("Hai scelto la seguente immagine:", scelt)
+            return scelt
+
 
 def chiedi_opzione():
     while True:
@@ -44,16 +68,3 @@ def run_docker_compose():
     subprocess.run("docker compose up -d")
     print("Docker compose applied.")
 
-
-# PATH DEFINITION
-
-diagram_xml = "drawio_Diagrams/ProvaProprieta.drawio.xml"
-
-docker_config_file = "/Users/orlando/Desktop/FakeArchitectureOrchestrator/project_new/docker_config.json"
-
-#terraform_path = "C://Users//pierc//Documents//Magistrale//2 Anno//1° Semestre//CyberSecurity//Progetto//terraform.exe"
-terraform_path = "/Users/orlando/Desktop/FakeArchitectureOrchestrator/project_new/terraform"
-
-image_path = "Images/img2.jpg"
-result_img_path = "Images/prediction.jpg"
-img_resized_path = "Images/resized.jpg"

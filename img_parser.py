@@ -15,9 +15,11 @@ def img_parser():
 
     print("----- IMG_PARSER STARTING -----")
 
+    imag = utils.chiedi_img()
+
     # LOAD IMAGE FOR INFERENCE
 
-    image = cv2.imread(utils.image_path)
+    image = cv2.imread(imag)
 
     # cv2.imshow("IMAGE", image)
     # cv2.waitKey(0)

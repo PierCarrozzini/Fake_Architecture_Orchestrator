@@ -1,13 +1,9 @@
-import json
-import subprocess
 import terraform_plan_generator
 import utils
 import xml_Parser
 import img_parser
 from PIL import Image
 from matplotlib import pyplot as plt  # importate anche le librerie contourpy cycler fonttools kiwiresolver numpy
-
-
 # packaging pyparsing python-dateutil six matplotlib
 
 if __name__ == "__main__":
@@ -20,8 +16,6 @@ if __name__ == "__main__":
         print("Hai scelto l'opzione 'img_parser'. Prosegui con il codice relativo a 'img'.")
         img_parser.img_parser()
 
-
-
     elif opzione_scelta == 'compose':
         print("Hai scelto l'opzione 'compose'. Prosegui con il codice relativo a 'compose'.")
         utils.run_docker_compose()
@@ -31,10 +25,10 @@ if __name__ == "__main__":
 
         print("=== Starting Detection ===")
 
-        #image = Image.open(utils.image_path)
-        #plt.imshow(image)
-        #plt.axis('off')
-        #plt.show(block=False)
+        image = Image.open(utils.image_path)
+        plt.imshow(image)
+        plt.axis('off')
+        plt.show(block=False)
 
         # Reading the diagram components from the xml file
         components = xml_Parser.parse_drawio_xml(utils.diagram_xml)
@@ -47,7 +41,6 @@ if __name__ == "__main__":
         # Generate the terraform plan using detected components and current docker configuration
         terraform_code = terraform_plan_generator.generate_terraform_plan(components, docker_config)
 
-
         # Write the generated plan to a .tf file
         utils.write_terraform_code_to_file(terraform_code)
 
@@ -57,6 +50,6 @@ if __name__ == "__main__":
         # Next step: Apply Terraform Plan
         utils.run_terraform_apply(utils.terraform_path)
 
-        #plt.waitforbuttonpress()
+        plt.waitforbuttonpress()
 
         print("\n=== Infrastructure Generation Complete ===")

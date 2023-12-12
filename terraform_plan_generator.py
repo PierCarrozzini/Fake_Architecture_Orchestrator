@@ -3,6 +3,7 @@ def generate_terraform_plan(components, docker_config):
 
     terraform_code = ""
     external_port_web_server = 8079
+    external_port_database = 3305
 
     for component in components:
         component_type = component['type']

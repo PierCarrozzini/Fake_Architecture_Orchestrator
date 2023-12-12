@@ -3,19 +3,20 @@
 import subprocess
 import json
 
-
 # PATH DEFINITION
 
 diagram_xml = "drawio_Diagrams/ProvaProprieta.drawio.xml"
 
 docker_config_file = "/Users/orlando/Desktop/FakeArchitectureOrchestrator/project_new/docker_config.json"
+#docker_config_file = "docker_config.json"
 
-#terraform_path = "C://Users//pierc//Documents//Magistrale//2 Anno//1° Semestre//CyberSecurity//Progetto//terraform.exe"
+# terraform_path = "C://Users//pierc//Documents//Magistrale//2 Anno//1° Semestre//CyberSecurity//Progetto//terraform.exe"
 terraform_path = "/Users/orlando/Desktop/FakeArchitectureOrchestrator/project_new/terraform"
 
 image_path = "Images/test.jpg"
 result_img_path = "Images/prediction.jpg"
 img_resized_path = "Images/resized.jpg"
+
 
 # FUNCTION DEFINITION
 
@@ -28,6 +29,7 @@ def chiedi_img():
             print("Hai scelto la seguente immagine:", scelt)
             return scelt
 
+
 def chiedi_opzione():
     while True:
         scelta = input("Scegli un'opzione (digita 'img', 'xml' o 'compose'): ").lower()
@@ -35,6 +37,7 @@ def chiedi_opzione():
             return scelta
         else:
             print("Opzione non valida. Riprova.")
+
 
 def load_docker_config(config_file):
     print("Loading Docker configuration...")
@@ -63,8 +66,8 @@ def run_terraform_apply(path):
     subprocess.run([path, "apply", "-auto-approve"])
     print("Terraform plan applied.")
 
+
 def run_docker_compose():
     print("Applying Docker compose...")
     subprocess.run("docker compose up -d")
     print("Docker compose applied.")
-

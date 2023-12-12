@@ -3,6 +3,7 @@
 import subprocess
 import json
 
+
 # PATH DEFINITION
 
 diagram_xml = "drawio_Diagrams/ProvaProprieta.drawio.xml"
@@ -20,13 +21,12 @@ img_resized_path = "Images/resized.jpg"
 
 def chiedi_img():
     while True:
-        scelt = input(" \n Fornire il path dell'immagine da analizzare o default per l'immagine predefinita: ").lower()
+        scelt = input(" \nFornire il path dell'immagine da analizzare o default per l'immagine predefinita: ").lower()
         if scelt in ['Default', 'default']:
             return image_path
         else:
             print("Hai scelto la seguente immagine:", scelt)
             return scelt
-
 
 def chiedi_opzione():
     while True:

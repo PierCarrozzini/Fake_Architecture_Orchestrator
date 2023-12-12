@@ -1,8 +1,8 @@
 {
   "web_server": {
     "image": "nginx:latest",
-    "volume": "C://Users//pierc//PycharmProjects//FakeArchitectureOrchestrator//my_web_page"
-  },
+    "volume": "/Users/orlando/Desktop/FakeArchitectureOrchestrator/project_new/my_web_page"
+ },
   "database": {
     "image": "mysql:latest",
     "name": "my_database",
@@ -39,11 +39,26 @@
   },
   "cache": {
     "image": "redis:latest",
-    "port": 6379
+    "port": 6379,
+    "restart": "always",
+    "command": [
+        "redis-server",
+        "--requirepass my_redis_password",
+        "--save 900 1",
+        "--save 300 10"
+       ],
+    "REDIS_PASSWORD": "my_redis_password",
+    "REDIS_MAXMEMORY": "1gb",
+    "REDIS_APPENDONLY": "yes"
   },
   "message_queque": {
     "image": "rabbitmq:latest",
-    "port": 5672
+    "port": 5672,
+    "management_port": 15672,
+    "restart": "always",
+    "RABBITMQ_DEFAULT_VHOST": "/",
+    "RABBITMQ_DEFAULT_USER": "my_rabbitmq_user",
+    "RABBITMQ_DEFAULT_PASS": "my_rabbitmq_password"
   },
   "cms": {
     "image": "wordpress:latest",
@@ -57,10 +72,19 @@
   },
   "proxy": {
     "image": "haproxy:latest",
-    "port": 8080,
-    "forward": "web_server:80",
+    "port": 80,
+    "volume": "/usr/local/etc/haproxy/haproxy.cfg",
+    "config_file": "C:/Users/pierc/Downloads/haproxy.cfg",
     "ssl_certificate": "/path/to/certificate.pem",
     "ssl_key": "/path/to/private_key.pem",
+    "MAXCONN": "4096",
+    "MODE": "http",
+    "HTTP_CHECK": "disable-on-404",
+    "STATS_PORT": "1936",
+    "STATS_AUTH": "username:password",
+    "TIMEOUT_CONNECT": "5000",
+    "TIMEOUT_CLIENT": "50000",
+    "TIMEOUT_SERVER": "50000",
     "custom_config": {
       "option1": "value1",
       "option2": "value2"

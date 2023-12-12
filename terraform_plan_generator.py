@@ -64,14 +64,14 @@ resource "docker_container" "{container_name}" {{
                 APIFW_URL = docker_config[component_type].get('APIFW_URL', '')
                 APIFW_SERVER_URL = docker_config[component_type].get('APIFW_SERVER_URL', '')
 
-                #terraform_code += f'  volumes {{\n   <{HOST_PATH_TO_SPEC}> = "<{CONTAINER_PATH_TO_SPEC}>"\n}}\n'
+                # terraform_code += f'  volumes {{\n   <{HOST_PATH_TO_SPEC}> = "<{CONTAINER_PATH_TO_SPEC}>"\n}}\n'
                 terraform_code += (f'  ports {{\n    internal = {firewall_port}\n    external = '
                                    f' {firewall_port}\n  }}\n')
                 terraform_code += f'  restart = "{restart}"\n'
                 terraform_code += (f'  env = [ "APIFW_REQUEST_VALIDATION= {APIFW_REQUEST_VALIDATION}", '
                                    f'"APIFW_RESPONSE_VALIDATION= {APIFW_RESPONSE_VALIDATION}", "APIFW_API_SPECS= '
                                    f'{APIFW_API_SPECS}"]\n')
-# "APIFW_URL= {APIFW_URL}", "APIFW_SERVER_URL= {APIFW_SERVER_URL}"
+            # "APIFW_URL= {APIFW_URL}", "APIFW_SERVER_URL= {APIFW_SERVER_URL}"
 
             elif component_type == 'firewall-alpine':
 
@@ -81,26 +81,49 @@ resource "docker_container" "{container_name}" {{
                 restart = docker_config[component_type].get('restart', '')
 
                 terraform_code += f'  restart = "{restart}"\n'
-                terraform_code += (f' command = ["ash", "-c", "apk update && apk add iptables && iptables -A INPUT -p tcp --dport 80 -j ACCEPT && iptables -A INPUT -p udp --dport 53 -j DROP && exec tail -f /dev/null"]\n')
+                terraform_code += (f' command = ["ash", "-c", "apk update && apk add iptables && iptables -A INPUT -p '
+                                   f'tcp --dport 80 -j ACCEPT && iptables -A INPUT -p udp --dport 53 -j DROP && exec '
+                                   f'tail -f /dev/null"]\n')
 
             elif component_type == 'cache':
 
                 # Redis cache use case
 
                 cache_port = docker_config[component_type].get('port', '6379')
+                command = docker_config[component_type].get('command', '')
+                restart = docker_config[component_type].get('restart', '')
+                REDIS_PASSWORD = docker_config[component_type].get('REDIS_PASSWORD', 'password123')
+                REDIS_MAXMEMORY = docker_config[component_type].get('REDIS_MAXMEMORY', '50mb')
+                REDIS_APPENDONLY = docker_config[component_type].get('REDIS_APPENDONLY', 'yes')
 
                 terraform_code += (f'  ports {{\n    internal = {cache_port}\n    external = '
-
                                    f' {cache_port}\n  }}\n')
+                terraform_code += f'  restart = "{restart}"\n'
+                # terraform_code += f' command = "{command}"\n'
+                terraform_code += (
+                    f'  env = [ "REDIS_PASSWORD= {REDIS_PASSWORD}", "REDIS_MAXMEMORY= {REDIS_MAXMEMORY}",'
+                    f'"REDIS_APPENDONLY= {REDIS_APPENDONLY}"]\n')
 
             elif component_type == 'message_queque':
                 # RabbitMQ message queue use case
+
                 mq_port = docker_config[component_type].get('port', '5672')
+                restart = docker_config[component_type].get('restart', '')
+                RABBITMQ_DEFAULT_VHOST = docker_config[component_type].get('RABBITMQ_DEFAULT_VHOST', '/')
+                RABBITMQ_DEFAULT_USER = docker_config[component_type].get('RABBITMQ_DEFAULT_USER', 'myuser')
+                RABBITMQ_DEFAULT_PASS = docker_config[component_type].get('RABBITMQ_DEFAULT_PASS', 'mypass')
+
                 terraform_code += (f'  ports {{\n    internal = {mq_port}\n    external = '
                                    f' {mq_port}\n  }}\n')
+                terraform_code += f'  restart = "{restart}"\n'
+                # terraform_code += f' command = "{command}"\n'
+                terraform_code += (f'  env = [ "RABBITMQ_DEFAULT_VHOST= {RABBITMQ_DEFAULT_VHOST}",'
+                                   f' "RABBITMQ_DEFAULT_USER= {RABBITMQ_DEFAULT_USER}",'
+                                   f' "RABBITMQ_DEFAULT_PASS= {RABBITMQ_DEFAULT_PASS}"]\n')
 
             elif component_type == 'cms':
                 # WordPress use case CMS (Content Management System)
+
                 db_name = docker_config[component_type].get('WORDPRESS_DB_NAME', 'myname')
 
                 db_user = docker_config[component_type].get('WORDPRESS_DB_USER', 'myuser')
@@ -121,13 +144,31 @@ resource "docker_container" "{container_name}" {{
                                    f'"WORDPRESS_DB_USER= {db_user}","WORDPRESS_DB_HOST= {db_host}"]\n')
                 terraform_code += (f'  ports {{\n    internal = 80\n    external = '
                                    f' {wp_port}\n  }}\n')
-# ################## DA QUI IN POI TUTTO DA TESTARE ######################################
+
             elif component_type == 'proxy':
                 # HAProxy use case
-                proxy_port = docker_config[component_type].get('port', '8080')
-                terraform_code += (f'  ports {{\n    internal = {proxy_port}\n    external = '
-                                   f' {proxy_port}\n  }}\n')
 
+                proxy_port = docker_config[component_type].get('proxy_port', '80')
+                volume_path = docker_config[component_type].get('volume', '')
+                config_file = docker_config[component_type].get('config_file', '')
+                MAXCONN = docker_config[component_type].get('MAXCONN', '')
+                MODE = docker_config[component_type].get('MODE', '')
+                HTTP_CHECK = docker_config[component_type].get('HTTP_CHECK', '')
+                STATS_PORT = docker_config[component_type].get('STATS_PORT', '')
+                STATS_AUTH = docker_config[component_type].get('STATS_AUTH', '')
+                TIMEOUT_CONNECT = docker_config[component_type].get('TIMEOUT_CONNECT', '')
+                TIMEOUT_CLIENT = docker_config[component_type].get('TIMEOUT_CLIENT', '')
+                TIMEOUT_SERVER = docker_config[component_type].get('TIMEOUT_SERVER', '')
+                terraform_code += (f'  volumes {{\n    host_path      = "{config_file}"\n    '
+                                   f'container_path ="{volume_path}"\n    '
+                                   f'read_only = "true"\n}}\n')
+                terraform_code += (f'  ports {{\n    internal = {proxy_port}\n    external = '
+                                   f'8080\n  }}\n')
+                terraform_code += (f'  env = [ "MAXCONN= {MAXCONN}","MODE= {MODE}",'
+                                   f'"HTTP_CHECK= {HTTP_CHECK}","STATS_PORT= {STATS_PORT}",'
+                                   f'"STATS_AUTH= {STATS_AUTH}","TIMEOUT_CONNECT= {TIMEOUT_CONNECT}",'
+                                   f'"TIMEOUT_CLIENT= {TIMEOUT_CLIENT}","TIMEOUT_SERVER= {TIMEOUT_SERVER}"]\n')
+            # ################## DA QUI IN POI TUTTO DA TESTARE ######################################
             elif component_type == 'monitoring':
                 # Prometheus & Grafana (Monitoraggio e Registrazione)
                 prometheus_port = docker_config[component_type].get('prometheus_port', '9090')

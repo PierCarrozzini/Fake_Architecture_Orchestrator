@@ -1,21 +1,9 @@
 
-resource "docker_container" "firewall_0_container" {
-  image = "wallarm/api-firewall:latest"
-  name  = "firewall_0_container"
-  ports {
-    internal = 8088
-    external =  8088
-  }
-  restart = "on-failure"
-  env = [ "APIFW_REQUEST_VALIDATION= LOG_ONLY", "APIFW_RESPONSE_VALIDATION= LOG_ONLY", "APIFW_API_SPECS= /api-firewall/resources/swagger.json"]
-}
-
-
 resource "docker_container" "web_server_1_container" {
   image = "nginx:latest"
   name  = "web_server_1_container"
   volumes {
-    host_path      = "/Users/orlando/Desktop/FakeArchitectureOrchestrator/project_new/my_web_page"
+    host_path      = "C://Users//pierc//PycharmProjects//FakeArchitectureOrchestrator//my_web_page"
     container_path = "/usr/share/nginx/html"
   }
   ports {
@@ -25,43 +13,22 @@ resource "docker_container" "web_server_1_container" {
 }
 
 
-resource "docker_container" "database_2_container" {
-  image = "mysql:latest"
-  name  = "database_2_container"
-  volumes {
-    container_path = "/var/lib/mysql"
-}
-  restart = "always"
-  env = [ "MYSQL_DATABASE= my_database","MYSQL_ROOT_PASSWORD= password123","MYSQL_USER= my_user","MYSQL_PASSWORD= password123"]
+resource "docker_container" "grafana_6_container" {
+  image = "grafana/grafana:latest"
+  name  = "grafana_6_container"
   ports {
-    internal = 3306
-    external =  3306
+    internal = 3000
+    external =  3000
   }
 }
 
 
-resource "docker_container" "firewall_3_container" {
-  image = "wallarm/api-firewall:latest"
-  name  = "firewall_3_container"
+resource "docker_container" "prometheus_7_container" {
+  image = "ubuntu/prometheus:2.48.0-22.04_stable"
+  name  = "prometheus_7_container"
   ports {
-    internal = 8088
-    external =  8088
-  }
-  restart = "on-failure"
-  env = [ "APIFW_REQUEST_VALIDATION= LOG_ONLY", "APIFW_RESPONSE_VALIDATION= LOG_ONLY", "APIFW_API_SPECS= /api-firewall/resources/swagger.json"]
-}
-
-
-resource "docker_container" "web_server_4_container" {
-  image = "nginx:latest"
-  name  = "web_server_4_container"
-  volumes {
-    host_path      = "/Users/orlando/Desktop/FakeArchitectureOrchestrator/project_new/my_web_page"
-    container_path = "/usr/share/nginx/html"
-  }
-  ports {
-    internal = 80
-    external = 8081
+    internal = 9090
+    external =  9090
   }
 }
 

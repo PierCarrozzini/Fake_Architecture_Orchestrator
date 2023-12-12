@@ -7,11 +7,11 @@ import json
 
 diagram_xml = "drawio_Diagrams/ProvaProprieta.drawio.xml"
 
-docker_config_file = "/Users/orlando/Desktop/FakeArchitectureOrchestrator/project_new/docker_config.json"
-#docker_config_file = "docker_config.json"
+#docker_config_file = "/Users/orlando/Desktop/FakeArchitectureOrchestrator/project_new/docker_config.json"
+docker_config_file = "docker_config.json"
 
-# terraform_path = "C://Users//pierc//Documents//Magistrale//2 Anno//1° Semestre//CyberSecurity//Progetto//terraform.exe"
-terraform_path = "/Users/orlando/Desktop/FakeArchitectureOrchestrator/project_new/terraform"
+terraform_path = "C://Users//pierc//Documents//Magistrale//2 Anno//1° Semestre//CyberSecurity//Progetto//terraform.exe"
+#terraform_path = "/Users/orlando/Desktop/FakeArchitectureOrchestrator/project_new/terraform"
 
 image_path = "Images/test.jpg"
 result_img_path = "Images/prediction.jpg"

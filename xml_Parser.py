@@ -9,12 +9,13 @@ def parse_drawio_xml(xml_file):
     default_value1 = 80
     default_value2 = 8080
     default_value3 = ''
-    default_value4 = 'OK'
+    default_value4 = 'yes'
 
     components = []
     component_counter = 1
-    recognized_values = ['web_server', 'database', 'firewall', 'cms', 'cache', 'message_queque', 'proxy',
-                         'monitoring', 'ci_cd', 'e_commerce', 'machine_learning', 'version_control']
+    recognized_values = ['web_server', 'database', 'firewall', 'firewall-alpine', 'cms',
+                         'cache', 'message_queque', 'proxy', 'monitoring', 'prometheus', 'grafana',
+                         'ci_cd', 'e_commerce', 'machine_learning', 'version_control']
     value_counts = {}
     other_value_count = 0
 
@@ -145,7 +146,7 @@ def parse_drawio_xml(xml_file):
     # Creating individual variables for each unique value
     for value, count in value_counts.items():
         if value in recognized_values:
-            globals()[value] = count  # Avoid this if possible; use a dictionary instead
+            globals()[value] = count
             print(f"Number of '{value}' components: {count}")
     print(f"Number of not recognized components: {other_value_count}")
     print(components)

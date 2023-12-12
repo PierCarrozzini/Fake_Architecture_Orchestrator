@@ -3,8 +3,7 @@ import utils
 import xml_Parser
 import img_parser
 from PIL import Image
-from matplotlib import pyplot as plt  # importate anche le librerie contourpy cycler fonttools kiwiresolver numpy
-# packaging pyparsing python-dateutil six matplotlib
+from matplotlib import pyplot as plt
 
 if __name__ == "__main__":
 

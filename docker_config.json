@@ -1,7 +1,7 @@
 {
   "web_server": {
     "image": "nginx:latest",
-    "volume": "/Users/orlando/Desktop/FakeArchitectureOrchestrator/project_new/my_web_page"
+    "volume": "C://Users//pierc//PycharmProjects//FakeArchitectureOrchestrator//my_web_page"
  },
   "database": {
     "image": "mysql:latest",
@@ -90,9 +90,19 @@
       "option2": "value2"
     }
   },
-  "monitoring": {
-    "prometheus_port": 9090,
+  "prometheus": {
+    "image": "ubuntu/prometheus:2.48.0-22.04_stable",
+    "prometheus_port": 9090
+  },
+  "grafana": {
+    "image": "grafana/grafana:latest",
     "grafana_port": 3000
+  },
+  "machine_learning": {
+    "image": "jupyter/scipy-notebook:latest",
+    "port": 8888,
+    "JUPYTER_ENABLE_LAB": "yes",
+    "command": ["start-notebook.sh", "--NotebookApp.token=''", "--NotebookApp.password=''"]
   },
   "ci_cd": {
     "image": "jenkins:latest",
@@ -101,10 +111,6 @@
   "e_commerce": {
     "image": "magento:latest",
     "port": 8080
-  },
-  "machine_learning": {
-    "image": "jupyter:latest",
-    "port": 8888
   },
   "version_control": {
     "image": "gitlab/gitlab-ce:latest",

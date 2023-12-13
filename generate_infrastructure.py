@@ -44,10 +44,10 @@ if __name__ == "__main__":
         utils.write_terraform_code_to_file(terraform_code)
 
         # Next step: Initialize Terraform
-        utils.run_terraform_init(utils.terraform_path)
+        #utils.run_terraform_init(utils.terraform_path)
 
         # Next step: Apply Terraform Plan
-        utils.run_terraform_apply(utils.terraform_path)
+        #utils.run_terraform_apply(utils.terraform_path)
 
         plt.waitforbuttonpress()
 

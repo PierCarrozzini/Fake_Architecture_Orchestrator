@@ -1,5 +1,8 @@
 import xml.etree.ElementTree as ET
 from tabulate import tabulate
+import pandas as pd
+from openpyxl import load_workbook
+from openpyxl.utils import get_column_letter
 
 
 def parse_drawio_xml(xml_file):
@@ -155,10 +158,44 @@ def parse_drawio_xml(xml_file):
 
     # Ottiengo le chiavi del dizionario come header (per tabella è così)
     header = list(data[0].keys())
+    print(header)
 
     # Conversione dei dizionari in liste per ogni riga
     table_data = [list(row.values()) for row in data]
+    print(table_data)
 
     # Stampo i dati sotto forma di tabella (package tabulate)
     print(tabulate(table_data, headers=header, tablefmt="fancy_grid"))
+
+    excel_filename = "Report/output.xlsx"
+
+    next_sheet_number = 1
+    while f'Foglio{next_sheet_number}' in pd.ExcelFile(excel_filename).sheet_names:
+        next_sheet_number += 1
+
+    df = pd.DataFrame(table_data,
+                      columns=['number', 'id', 'name', 'value', 'type', 'Internal_port', 'External_port', 'style', 'x',
+                               'y', 'width', 'height'])
+
+    with pd.ExcelWriter(excel_filename, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
+
+        if not pd.ExcelFile(excel_filename).sheet_names:
+            writer.book.create_sheet(title=f'Foglio{next_sheet_number}')
+            sheet = writer.sheets[f'Foglio{next_sheet_number}']
+
+            sheet.append([None])
+            sheet.append([None])
+
+        df.to_excel(writer, index=False, sheet_name=f'Foglio{next_sheet_number}', startrow=4)  # Inizia dalla riga 4
+
+        separator_row = len(df) + 8
+        sheet = writer.sheets[f'Foglio{next_sheet_number}']
+        sheet.insert_rows(separator_row)
+        sheet.cell(row=separator_row, column=1, value='#----------------------------------------------#')
+        sheet.cell(row=2, column=8, value="*Fake Architecture Orchestrator* Run Number=")
+        sheet.cell(row=2, column=9, value=next_sheet_number)
+        sheet.column_dimensions[get_column_letter(8)].width = 40
+
+        print(f"I dati sono stati aggiunti con successo (Foglio{next_sheet_number}).")
+
     return components

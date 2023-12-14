@@ -161,7 +161,7 @@ resource "docker_container" "{container_name}" {{
                                    f'container_path ="{volume_path}"\n    '
                                    f'read_only = "true"\n}}\n')
                 terraform_code += (f'  ports {{\n    internal = {proxy_port}\n    external = '
-                                   f'8080\n  }}\n')
+                                   f'{proxy_port}\n  }}\n')
                 terraform_code += (f'  env = [ "MAXCONN= {maxconn}","MODE= {mode}",'
                                    f'"HTTP_CHECK= {http_check}","STATS_PORT= {stats_port}",'
                                    f'"STATS_AUTH= {stats_auth}","TIMEOUT_CONNECT= {timeout_connect}",'

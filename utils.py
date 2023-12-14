@@ -5,7 +5,8 @@ import json
 
 # PATH DEFINITION
 
-diagram_xml = "drawio_Diagrams/ProvaProprieta.drawio.xml"
+diagram_xml = "drawio_Diagrams/final.drawio.xml"
+diagram_img = "Images/final.jpg"
 
 #docker_config_file = "/Users/orlando/Desktop/FakeArchitectureOrchestrator/project_new/docker_config.json"
 docker_config_file = "docker_config.json"

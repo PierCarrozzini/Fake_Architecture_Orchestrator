@@ -24,7 +24,7 @@ if __name__ == "__main__":
 
         print("=== Starting Detection ===")
 
-        image = Image.open(utils.image_path)
+        image = Image.open(utils.diagram_img)
         plt.imshow(image)
         plt.axis('off')
         plt.show(block=False)

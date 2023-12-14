@@ -39,7 +39,7 @@ def img_parser():
 
     model.predict(utils.img_resized_path, confidence=50, overlap=30).save(utils.result_img_path)
 
-    # VARIABILI CHE SERVONO
+    # VARIABILI UTILI
 
     components = []
     index = 0
